@@ -28,4 +28,5 @@
     <string name="cloud">Cloud</string>
     <string name="ultravioldet">UltraViolet</string>
     <string name="visibility">Visibility</string>
+    <string name="cityName">CityName</string>
 </resources>

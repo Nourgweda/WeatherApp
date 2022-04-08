@@ -22,4 +22,22 @@
             android:id="@+id/action_mapsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.weatherapp.favorites.view.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_favMapsFragment"
+            app:destination="@id/favMapsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favMapsFragment"
+        android:name="com.example.weatherapp.favorites.view.FavMapsFragment"
+        android:label="fragment_fav_maps"
+        tools:layout="@layout/fragment_fav_maps" >
+        <action
+            android:id="@+id/action_favMapsFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+    </fragment>
 </navigation>

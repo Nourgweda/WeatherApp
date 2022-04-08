@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weatherapp.R
+import com.example.weatherapp.db.ConcreteLocalSource
+import com.example.weatherapp.db.LocaleSource
 import com.example.weatherapp.home.viewmodel.OnHourViewModel
 import com.example.weatherapp.home.viewmodel.OnHourViewModelFactory
 import com.example.weatherapp.model.Weather
@@ -45,6 +47,7 @@ class HomeFragment : Fragment(), OnHourClickListener {
     lateinit var weHourAdapter: WeHourAdapter
     lateinit var layoutManager: LinearLayoutManager
     lateinit var onHourViewModelFactory: OnHourViewModelFactory
+    lateinit var localeSource: LocaleSource
 
 
     //day
@@ -266,6 +269,7 @@ class HomeFragment : Fragment(), OnHourClickListener {
         onHourViewModelFactory = OnHourViewModelFactory(
             WeatherRepository.getRepoInstance(
                 WeatherClient.getClientInstance()!!,
+                ConcreteLocalSource(this.requireContext()),
                 this.context!!
             ),this.context!!
         )

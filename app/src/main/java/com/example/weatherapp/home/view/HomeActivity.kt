@@ -25,7 +25,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import com.example.weatherapp.R
 import com.example.weatherapp.alerts.AlertFragment
-import com.example.weatherapp.favorites.FavoriteFragment
+import com.example.weatherapp.favorites.view.FavoriteFragment
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
@@ -140,7 +140,7 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
                 currentFragment=HomeFragment()
             }
             R.id.favoriteIcon->{
-                currentFragment=FavoriteFragment()
+                currentFragment= FavoriteFragment()
             }
 
             R.id.alertIcon->{
