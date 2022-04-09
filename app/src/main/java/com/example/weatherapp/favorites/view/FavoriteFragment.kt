@@ -19,6 +19,8 @@ import com.example.weatherapp.favorites.viewmodel.FavoriteViewModelFactory
 import com.example.weatherapp.model.FavWeather
 import com.example.weatherapp.model.WeatherRepository
 import com.example.weatherapp.network.WeatherClient
+import com.example.weatherapp.preferences.Preference
+import com.google.android.gms.maps.model.LatLng
 
 
 class FavoriteFragment : Fragment() ,OnFavClickListener{
@@ -34,6 +36,17 @@ class FavoriteFragment : Fragment() ,OnFavClickListener{
     lateinit var plusFavoriteTV: TextView
     lateinit var favMapsFragment:FavMapsFragment
 
+//    lateinit var receivedLocation: LatLng
+//    lateinit var resPreference: Preference
+     var receivedLat: Double? = null
+     var receivedLong: Double? = null
+
+    var input:Int = 0
+
+    var longi:Double = 0.0
+    var lati:Double = 0.0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,6 +58,15 @@ class FavoriteFragment : Fragment() ,OnFavClickListener{
     ): View? {
         // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_favorite, container, false)
+
+        //send to api
+//        if(receivedLat!=null&&receivedLong!=null) {
+//            resPreference = Preference.getInstance(context!!.applicationContext)!!
+//            resPreference.sendPreference("LATITUDE", receivedLocation!!.latitude.toLong())
+//            resPreference.sendPreference("LONGITUDE", receivedLocation!!.longitude.toLong())
+//        }
+
+
 
         favoriteRecyclerView = view.findViewById(R.id.favoriteRecyclerView)
         plusFavoriteTV=view.findViewById(R.id.plusFavoriteTV)
@@ -60,7 +82,7 @@ class FavoriteFragment : Fragment() ,OnFavClickListener{
         favoriteViewModel = ViewModelProvider(this,favoriteViewModelFactory).get(FavoriteViewModel::class.java)
 
         setUpRecyclerView()
-        setUpFavorites()
+        doFav()
 
         plusFavoriteTV.setOnClickListener{
             val favMapsFragment = FavMapsFragment()
@@ -80,7 +102,7 @@ class FavoriteFragment : Fragment() ,OnFavClickListener{
         return view
     }
 
-    private fun setUpFavorites() {
+    private fun doFav() {
         favoriteViewModel.favoriteWeatherList.observe(this) {
             if (it != null) {
                 favoriteAdapter.setFavorite(it)
@@ -99,6 +121,24 @@ class FavoriteFragment : Fragment() ,OnFavClickListener{
     override fun onClick(favWeather: FavWeather) {
         favoriteViewModel.deleteWeather(favWeather)
         Toast.makeText(requireContext(),"Item Deleted", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItem(favWeather: FavWeather) {
+        //receivedLocation= LatLng(favWeather.lattitude,favWeather.longitude)
+        receivedLat=favWeather.lattitude
+        receivedLong=favWeather.longitude
+        val bundle = Bundle()
+        bundle.putDouble("recLat",receivedLat!!)
+        bundle.putDouble("recLong",receivedLong!!)
+        val resultFavoriteFragment = ResultFavoriteFragment()
+        val transaction = fragmentManager!!.beginTransaction()
+        resultFavoriteFragment.arguments = bundle
+        transaction.replace(R.id.fragmentContainerView, resultFavoriteFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+
+
+
     }
 
 

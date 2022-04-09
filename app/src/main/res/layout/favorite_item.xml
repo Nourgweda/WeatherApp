@@ -9,6 +9,7 @@
     app:cardCornerRadius="20dp"
     app:cardBackgroundColor="@color/white"
     android:layout_margin="5dp"
+    android:id="@+id/favoriteItem"
     app:cardPreventCornerOverlap="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
