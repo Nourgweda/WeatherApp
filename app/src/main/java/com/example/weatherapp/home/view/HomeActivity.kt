@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -16,29 +15,22 @@ import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import com.example.weatherapp.R
-import com.example.weatherapp.alerts.AlertFragment
+import com.example.weatherapp.alerts.view.AlertFragment
 import com.example.weatherapp.favorites.view.FavoriteFragment
+import com.example.weatherapp.settings.view.SettingsFragment
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarMenu
 
 class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
@@ -68,58 +60,55 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
     //bottom navigation
     private lateinit var currentFragment: Fragment
 
+    //trial
+      var flag:Boolean = true
+
+    //send data to settings
+    var setLoc:Int = 0
+    var setTemp:Int = 0
+    var setLang:Int = 0
+    var setWind:Int = 0
+    var setNot:Int = 0
 
 
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        //received bundle
+        val bundle :Bundle ?=intent.extras
+        if (bundle!=null) {
+            val message = bundle.getInt("home")
+            Log.d("TAG", "onCreate:HERE HERE HERE HERE HERE " + message)
+            when(message){
+                1->{
+                    starterRadioCheck=1
+                }
+                2->{
+                    starterRadioCheck=2
+                }
+
+
+            }
+
+
+
+
+
+        }
+        //receveid bundle
         //trial location
         fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(this)
-        //start dialog to set up settings
-        showDialog()
-//        if(starterRadioCheck==2){
-//            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-//            mapFragment.getMapAsync(this)
-//            val fragmentManager: FragmentManager = supportFragmentManager
-//            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-//            val myFragment = MapsFragment()
-//            val bundle = Bundle()
-//            sendedLocationLati?.let { bundle.putDouble("latitude", it)}
-//            sendedLocationLongi?.let{bundle.putDouble("longitude",it)}
-//            myFragment.arguments = bundle
-//            fragmentTransaction.add(R.id.fragmentContainerView, myFragment).commit()
-//
-//            Log.d("TAG", "onCreate: LATITUE"+sendedLocationLati)
-//            Log.d("TAG", "onCreate: LONGITUDE"+sendedLocationLongi)
 
 
-//        }
-        //trial
-//        if(starterRadioCheck==1){
-////            val fragmentManager: FragmentManager = supportFragmentManager
-////            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-////            val homeFragment = HomeFragment()
-////            val bundle = Bundle()
-////            sendedLocationLati?.let { bundle.putDouble("latitude", it)}
-////            sendedLocationLongi?.let{bundle.putDouble("longitude",it)}
-////            homeFragment.arguments = bundle
-////            fragmentTransaction.add(R.id.fragmentContainerView, homeFragment).commit()
-////            Log.d("TAG", "onCreate: LATITUE"+sendedLocationLati)
-////            Log.d("TAG", "onCreate: LONGITUDE"+sendedLocationLongi)
-//                            val bundle = Bundle()
-//                            bundle.putSerializable("latitude",sendedLocationLati)
-//                            bundle.putSerializable("longitude",sendedLocationLongi)
-//            findNavController(view).navigate(
-//                R.id.action_addMedicationPrimary_to_addMedicationFinal,
-//                bundle
-//            )
-//
-//
-//
-//
-//
-//        }
+            //showDialog()
+
+
+            getLocation()
+
+
+
+
 
 
         //bottom navigation
@@ -134,6 +123,8 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
     }
 
 
+
+
     val navigationListener=BottomNavigationView.OnNavigationItemSelectedListener {
         when(it.itemId){
             R.id.homeIcon-> {
@@ -146,11 +137,20 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
             R.id.alertIcon->{
                 currentFragment= AlertFragment()
             }
+            R.id.settingsIcon->{
+                currentFragment= SettingsFragment(setLoc,2,3,4,5)
+            }
         }
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView,currentFragment).commit()
         true
 
     }
+
+
+
+
+
+
 
 
 
@@ -172,28 +172,9 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
             gpsRadioBtn.setChecked(false)
             Log.d("TAG", "showDialog: map checked")
             starterRadioCheck=2
-//            if(starterRadioCheck==2){
-////                            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-////                            mapFragment.getMapAsync(this)
-////                val intent:Intent = Intent(this,MapsActivity::class.java)
-////                startActivity(intent)
-//            }
 
             getLocation()
 
-
-//            val fragmentManager: FragmentManager = supportFragmentManager
-//            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-//            val myFragment = MapsFragment()
-//            val bundle = Bundle()
-//            sendedLocationLati?.let { bundle.putDouble("latitude", it)}
-//            sendedLocationLongi?.let{bundle.putDouble("longitude",it)}
-//            myFragment.arguments = bundle
-//            fragmentTransaction.add(R.id.fragmentContainerView, myFragment).commit()
-//            Log.d("TAG", "onCreate: LATITUE"+sendedLocationLati)
-//            Log.d("TAG", "onCreate: LONGITUDE"+sendedLocationLongi)
-
-           // dialog.dismiss()
         }
         doneBtn.setOnClickListener {
             Log.d("TAG", "showDialog:starter number is "+starterRadioCheck)
@@ -204,12 +185,15 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
 
 
     //search for current location using GPS
-    private fun getLocation(){
+     fun getLocation(){
         //if permission is true
+        Log.d("TAG", "getLocation: HERE AHOOOO")
         if(checkPermission()){
             //if location is set on mobile is true
+                //showDialog()
             if(locationEnabled()){
                 //get the longitute and latitude
+                    //showDialog()
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener(this){
                         task->
                     //check if the location get nullable to get result of the task
@@ -222,47 +206,39 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
                         //sendedLocation= LatLng(location.latitude,location.longitude)
                         sendedLocationLati=location.latitude
                         sendedLocationLongi=location.longitude
-                        if(starterRadioCheck==1){
-                            val fragmentManager: FragmentManager = supportFragmentManager
-                            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-                            val homeFragment = HomeFragment()
-                            val bundle = Bundle()
-                            sendedLocationLati?.let { bundle.putDouble("latitude", it)}
-                            sendedLocationLongi?.let{bundle.putDouble("longitude",it)}
-                            homeFragment.arguments = bundle
-                            fragmentTransaction.add(R.id.fragmentContainerView, homeFragment).commit()
-                            Log.d("TAG", "onCreate: LATITUE"+sendedLocationLati)
-                            Log.d("TAG", "onCreate: LONGITUDE"+sendedLocationLongi)
-//                            val bundle = Bundle()
-//                            bundle.putSerializable("latitude",sendedLocationLati)
-//                            bundle.putSerializable("longitude",sendedLocationLongi)
+                        //if (!flag) {
+                            if (starterRadioCheck == 1||flag) {
+                                val fragmentManager: FragmentManager = supportFragmentManager
+                                val fragmentTransaction: FragmentTransaction =
+                                    fragmentManager.beginTransaction()
+                                val homeFragment = HomeFragment()
+                                val bundle = Bundle()
+                                sendedLocationLati?.let { bundle.putDouble("latitude", it) }
+                                sendedLocationLongi?.let { bundle.putDouble("longitude", it) }
+                                homeFragment.arguments = bundle
+                                fragmentTransaction.add(R.id.fragmentContainerView, homeFragment)
+                                    .commit()
+                                Log.d("TAG", "onCreate: LATITUE" + sendedLocationLati)
+                                Log.d("TAG", "onCreate: LONGITUDE" + sendedLocationLongi)
+                                setLoc=1
 
+                            }
+                            if (starterRadioCheck == 2) {
+                                val fragmentManager: FragmentManager = supportFragmentManager
+                                val fragmentTransaction: FragmentTransaction =
+                                    fragmentManager.beginTransaction()
+                                val mapsFragment = MapsFragment()
+                                val bundle = Bundle()
+                                sendedLocationLati?.let { bundle.putDouble("latitude", it) }
+                                sendedLocationLongi?.let { bundle.putDouble("longitude", it) }
+                                mapsFragment.arguments = bundle
+                                fragmentTransaction.add(R.id.fragmentContainerView, mapsFragment)
+                                    .commit()
+                                Log.d("TAG", "onCreate: LATITUE" + sendedLocationLati)
+                                Log.d("TAG", "onCreate: LONGITUDE" + sendedLocationLongi)
+                                setLoc=2
+                            }
 
-
-
-
-                        }
-                        if(starterRadioCheck==2){
-                            val fragmentManager: FragmentManager = supportFragmentManager
-                            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-                            val mapsFragment = MapsFragment()
-                            val bundle = Bundle()
-                            sendedLocationLati?.let { bundle.putDouble("latitude", it)}
-                            sendedLocationLongi?.let{bundle.putDouble("longitude",it)}
-                            mapsFragment.arguments = bundle
-                            fragmentTransaction.add(R.id.fragmentContainerView, mapsFragment).commit()
-                            Log.d("TAG", "onCreate: LATITUE"+sendedLocationLati)
-                            Log.d("TAG", "onCreate: LONGITUDE"+sendedLocationLongi)
-                        }
-
-
-                        //----trial---//show fragment if location is here and if he choose map button
-//                        if(starterRadioCheck==2){
-////                            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-////                            mapFragment.getMapAsync(this)
-//                        val intent:Intent = Intent(this,MapsActivity::class.java)
-//                        startActivity(intent)
-//                        }
                     }
                 }
             }
@@ -288,6 +264,8 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
         val locationManager:LocationManager= getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 ||locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+       // flag
+
     }
 
     //get permission
@@ -295,6 +273,7 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
         //we save it in array of because if we have multiple permissions
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION), Permission_Request)
+       // showDialog()
     }
 
     //check permission
@@ -303,9 +282,14 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
             PackageManager.PERMISSION_GRANTED&&
             ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION)==
             PackageManager.PERMISSION_GRANTED){
+                //showDialog()
             return  true
+           // flag
+            //showDialog()
         }
         return false
+        //!flag
+        //showDialog()
     }
 
     override fun onRequestPermissionsResult(
@@ -317,7 +301,10 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
         if(requestCode==Permission_Request){
             if(grantResults.isNotEmpty()&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
                 Log.d("TAG", "onRequestPermissionsResult: GRANTED ")
-                getLocation()
+                flag
+                //getLocation()
+                showDialog()
+
             }
             else{
                 Log.d("TAG", "onRequestPermissionsResult: DENIED")
@@ -407,4 +394,3 @@ class HomeActivity : AppCompatActivity(),GoogleApiClient.ConnectionCallbacks, Go
 //        }
 //    }
 }
-

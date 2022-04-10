@@ -35,4 +35,13 @@ class WeatherRepository(
     }
     override fun getFavoriteWeather(): LiveData<List<FavWeather>> =localeSource.getFavoriteWeather()
 
+    override fun insertAlarm(alarm: Alarm){
+        localeSource.insert(alarm)
+    }
+
+    override fun getAlarm(): LiveData<List<Alarm>> =localeSource.getAllAlarm()
+
+    override fun deleteAlarm(alarm: Alarm) {
+        localeSource.delete(alarm)
+    }
 }

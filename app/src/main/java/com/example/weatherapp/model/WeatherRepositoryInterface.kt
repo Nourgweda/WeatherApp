@@ -8,4 +8,7 @@ interface WeatherRepositoryInterface {
      fun insertWeather(favWeather: FavWeather)
      fun deletetWeather(favWeather: FavWeather)
     fun getFavoriteWeather() : LiveData<List<FavWeather>>
+    fun insertAlarm(alarm: Alarm)
+    fun getAlarm() : LiveData<List<Alarm>>
+    fun deleteAlarm(alarm: Alarm)
 }

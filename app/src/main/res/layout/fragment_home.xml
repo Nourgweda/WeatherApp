@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="#0C2C3A"
     tools:context=".home.view.HomeFragment">
 
     <androidx.cardview.widget.CardView
@@ -46,32 +47,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/locationCurrentTV" />
 
-        <View
+        <ImageView
             android:id="@+id/currentView"
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="50dp"
-            app:cardMaxElevation="12dp"
-            app:cardElevation="10dp"
+            android:background="@drawable/back_item"
             app:cardCornerRadius="20dp"
-            android:background="@color/light_orange"
+            app:cardElevation="10dp"
+            app:cardMaxElevation="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateCurrentTV"/>
+            app:layout_constraintTop_toBottomOf="@+id/dateCurrentTV" />
 
         <TextView
             android:id="@+id/descriptionCurrentTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:fontFamily="sans-serif-medium"
             android:text="TextView"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/currentView"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="@+id/currentView"
             app:layout_constraintTop_toTopOf="@+id/currentView" />
 
@@ -79,20 +80,21 @@
             android:id="@+id/tempCurrentTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
             android:text="TextView"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/currentView"
-            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="@+id/currentView"
             app:layout_constraintTop_toBottomOf="@+id/descriptionCurrentTV" />
 
         <ImageView
             android:id="@+id/iconCurrentImg"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="12dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/currentView"
             app:layout_constraintEnd_toEndOf="@id/currentView"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="@id/currentView"

@@ -62,13 +62,6 @@ class FavoriteAdapter(
             onFavClickListener.onItem(favoriteArrayList[position])
         }
 
-
-
-
-
-
-
-
     }
 
     override fun getItemCount(): Int {

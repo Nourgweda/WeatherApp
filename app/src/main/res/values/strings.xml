@@ -29,4 +29,22 @@
     <string name="ultravioldet">UltraViolet</string>
     <string name="visibility">Visibility</string>
     <string name="cityName">CityName</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="windSpeed">Wind Speed</string>
+    <string name="celcuis">Celsius</string>
+    <string name="kelvin">Kelvin</string>
+    <string name="fahernheit">Fahrenheit</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="msec">M/SEC</string>
+    <string name="hk">K/Hour</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="alarmdetails">Alarm Details</string>
+    <string name="alarm">Alarm</string>
+    <string name="startDate">Start Date</string>
+    <string name="endDate">End Date</string>
+    <string name="setAlarm">Set Alarm</string>
+    <string name="alarmName">Alarm Name</string>
 </resources>
