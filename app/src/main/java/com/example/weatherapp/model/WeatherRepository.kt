@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.weatherapp.db.LocaleSource
 import com.example.weatherapp.network.RemoteSource
+import com.example.weatherapp.preferences.Preference
 import retrofit2.Response
 
 class WeatherRepository(
@@ -14,7 +15,11 @@ class WeatherRepository(
     var context: Context
 ) : WeatherRepositoryInterface{
 
+
+     var preference: Preference= Preference.getInstance(context)!!
+
     companion object {
+        @SuppressLint("StaticFieldLeak")
         private var instance: WeatherRepository? = null
         fun getRepoInstance(
             remoteSource: RemoteSource,
@@ -26,7 +31,12 @@ class WeatherRepository(
         }
     }
 
-    override suspend fun getWeather(latitude:Double,longitude:Double): Response<Weather> = remoteSource.getWeather(latitude,longitude)
+
+
+
+    override suspend fun getWeather(latitude:Double,longitude:Double): Response<Weather> = remoteSource.getWeather(latitude,longitude,
+        preference.getRepo("temp")!!,
+        preference.getRepo("repo")!!)
     override  fun insertWeather(favWeather: FavWeather) {
         localeSource.insert(favWeather)
     }

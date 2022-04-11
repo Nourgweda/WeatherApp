@@ -78,6 +78,10 @@ class HomeFragment : Fragment(), OnHourClickListener {
     //send data
     lateinit var preference: Preference
     //lateinit var sharedPreferences: SharedPreferences
+    var setTemp:Int = 0
+    var setWind:Int = 0
+    var setNot:Int = 0
+
 
     var  la : Double=0.0
         var lo:Double = 0.0
@@ -88,7 +92,6 @@ class HomeFragment : Fragment(), OnHourClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //hour
-
     }
 
     private fun setUpRetrofit() {
@@ -181,8 +184,12 @@ class HomeFragment : Fragment(), OnHourClickListener {
 
         //try shared perederences here
 
-//        la= receivedLatitude!!
-//        lo=receivedLongitude!!
+
+        //revceiveing from preference
+        preference= Preference.getInstance(context!!.applicationContext)!!
+        setTemp=preference.getSettings("TEMPERATURE")!!
+
+
 
 
         Log.d("TAG", "onCreateView: TRANSFORMED"+receivedLatitude)

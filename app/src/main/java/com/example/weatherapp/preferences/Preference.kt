@@ -30,6 +30,37 @@ class Preference (var context: Context) {
             0
     }
 
+
+    fun sendSettings (key:String?, value:Int?){
+        val preferenceSend = preference.edit()
+        preferenceSend.putInt(key,value!!)
+        preferenceSend.apply()
+    }
+
+    fun getSettings(key:String?):Int?{
+        return if(preference!=null){
+            preference.getInt(key,0)
+        }else
+            0
+    }
+
+
+    fun sendRepo (key:String?, value:String?){
+        val preferenceSend = preference.edit()
+        preferenceSend.putString(key,value!!)
+        preferenceSend.apply()
+    }
+
+    fun getRepo(key:String?):String?{
+        return if(preference!=null){
+            preference.getString(key,"")
+        }else
+            ""
+    }
+
+
+
+
 //    fun putDouble(edit: SharedPreferences.Editor, key: String?, value: Double): SharedPreferences.Editor? {
 //        return edit.putLong(key, java.lang.Double.doubleToRawLongBits(value))
 //    }

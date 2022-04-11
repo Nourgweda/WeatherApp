@@ -42,7 +42,7 @@ private val dayWeatherArrayList: ArrayList<Weather.Daily>)
             //trial remain the celcuis icon
             var day = convertToData(dayWeatherArrayList[position].dt)
             var url = "https://openweathermap.org/img/wn/${dayWeatherArrayList[position].weather[0].icon}@2x.png"
-            Log.d("TAG", "onBindViewHolder: imageicon"+url)
+            //Log.d("TAG", "onBindViewHolder: imageicon"+url)
             holder.dayTV.text=day
             holder.weatherDescTV.text=dayWeatherArrayList[position].weather[0].description
             holder.minTV.text=dayWeatherArrayList[position].temp.min.toString()

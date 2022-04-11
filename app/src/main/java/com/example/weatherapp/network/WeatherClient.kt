@@ -58,14 +58,14 @@ class WeatherClient private constructor(): RemoteSource  {
 
 
 
-    override suspend fun getWeather(latitude:Double,longitude:Double): Response<Weather>
+    override suspend fun getWeather(latitude:Double,longitude:Double,unit:String,lang:String): Response<Weather>
     {
         val weatherService = RetrofitHelper.getInstance().create(WeatherService::class.java)
 
 
 //        Log.d("TAG", "dataReceivedFromHome: INSIDE METHOD"+ longituteSend)
 //        Log.d("TAG", "dataReceivedFromHome: INSDIDE METHOD"+ latitudeSend)
-        return weatherService.getWeather(latitude!!,longitude!!)
+        return weatherService.getWeather(latitude,longitude,unit = unit,lang = lang)
     }
 
 
