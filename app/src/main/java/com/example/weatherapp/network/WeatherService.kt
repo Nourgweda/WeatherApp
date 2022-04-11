@@ -11,7 +11,7 @@ interface WeatherService {
     suspend fun getWeather(
         @Query("lat") lat:Double,
         @Query("lon") lon:Double,
-        @Query("appid") appId:String="cb25c33a06ba3c9d1a92f7e08d670e7f",
+        @Query("appid") appId:String="07bc32cbc42b16533d7a7d702420bc9a",
         @Query("units") unit:String="metric",
         @Query("lang") lang:String="en"
     ): Response<Weather>

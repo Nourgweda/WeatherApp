@@ -9,23 +9,24 @@ import java.io.Serializable
 
 data class Weather(
 
-//    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
     val current: Current,
     val daily: List<Daily>,
     val hourly: List<Hourly>,
+    val alerts :ArrayList<Alerts>,
     val lat: Double,
     val lon: Double,
     val minutely: List<Minutely>,
     val timezone: String,
-    //@SerializedName("timezone_offset")
+    @SerializedName("timezone_offset")
     val timezoneOffset: Double
 ) {
     data class Current(
         val clouds: Double,
-       // @SerializedName("dew_point")
+        @SerializedName("dew_point")
         val dewPoint: Double,
         val dt: Double,
-       // @SerializedName("feels_like")
+        @SerializedName("feels_like")
         val feelsLike: Double,
         val humidity: Double,
         val pressure: Double,
@@ -35,11 +36,11 @@ data class Weather(
         val uvi: Double,
         val visibility: Double,
         val weather: List<Weather>,
-        //@SerializedName("wind_deg")
+        @SerializedName("wind_deg")
         val windDeg: Double,
-        //@SerializedName("wind_gust")
+        @SerializedName("wind_gust")
         val windGust: Double,
-        //@SerializedName("wind_speed")
+        @SerializedName("wind_speed")
         val windSpeed: Double
     ) {
         data class Weather(
@@ -52,13 +53,13 @@ data class Weather(
 
     data class Daily(
         val clouds: Double,
-        //@SerializedName("dew_point")
+        @SerializedName("dew_point")
         val dewPoint: Double,
         val dt: Double,
-        //@SerializedName("feels_like")
+        @SerializedName("feels_like")
         val feelsLike: FeelsLike,
         val humidity: Double,
-       // @SerializedName("moon_phase")
+        @SerializedName("moon_phase")
         val moonPhase: Double,
         val moonrise: Double,
         val moonset: Double,
@@ -69,11 +70,11 @@ data class Weather(
         val temp: Temp,
         val uvi: Double,
         val weather: List<Weather>,
-        //@SerializedName("wind_deg")
+        @SerializedName("wind_deg")
         val windDeg: Double,
-        //@SerializedName("wind_gust")
+        @SerializedName("wind_gust")
         val windGust: Double,
-       // @SerializedName("wind_speed")
+        @SerializedName("wind_speed")
         val windSpeed: Double
     ) {
         data class FeelsLike(
@@ -100,12 +101,21 @@ data class Weather(
         )
     }
 
+    data class Alerts(
+        @SerializedName("sender_name")
+        val senderName: String,
+        val event : String,
+        val start :Long,
+        val end :Long,
+        val description :String
+    )
+
     data class Hourly(
         val clouds: Double,
-        //@SerializedName("dew_point")
+        @SerializedName("dew_point")
         val dewPoint: Double,
         val dt: Double,
-        //@SerializedName("feels_like")
+        @SerializedName("feels_like")
         val feelsLike: Double,
         val humidity: Double,
         val pop: Double,
@@ -114,11 +124,11 @@ data class Weather(
         val uvi: Double,
         val visibility: Double,
         val weather: List<Weather>,
-        //@SerializedName("wind_deg")
+        @SerializedName("wind_deg")
         val windDeg: Int,
-        //@SerializedName("wind_gust")
+        @SerializedName("wind_gust")
         val windGust: Double,
-        //@SerializedName("wind_speed")
+        @SerializedName("wind_speed")
         val windSpeed: Double
     ) {
         data class Weather(

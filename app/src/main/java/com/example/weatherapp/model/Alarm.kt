@@ -27,9 +27,17 @@ data class Alarm (
     @NonNull
     var minute:String,
 
-    @ColumnInfo(name = "format")
+//    @ColumnInfo(name = "format")
+//    @NonNull
+//    var format:String,
+
+    @ColumnInfo(name = "startMillies")
     @NonNull
-    var format:String,
+    var startMillies:Long,
+
+    @ColumnInfo(name = "endMillies")
+    @NonNull
+    var endMillies:Long,
 
     @PrimaryKey
     @ColumnInfo(name = "ID")
